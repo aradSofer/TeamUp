@@ -7,7 +7,7 @@ class User {
     this.username = "";
     this.country = "";
     this.age = "";
-    this.title = "";
+    this.role = "";
     this.about = "";
     this.skills = [];
     this.picture = "";
