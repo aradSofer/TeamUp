@@ -288,10 +288,10 @@ if (!currentUser) {
     <div class="row justify-content-start">
         <div class="col-7">
             <div class="input-group d-flex justify-content-center mb-3 mt-5">
-                <label id="uploaderLabel" class="input-group-text py-5" for="profilePic-uploader">Upload Profile Picture</label>
-                <img id="profilePic-preview" class="" src="../" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                <label id="uploaderLabel" class="user-avatar-label py-5" for="profilePic-uploader">Upload Profile Picture</label>
+                <img id="profilePic-preview" class="" src="../" alt="Profile Picture" class="img-fluid" style="display:none;">
                 </div>
-                <input type="file" class="form-control d-none" id="profilePic-uploader" accept="image/jpeg, image/png">
+                <input type="file" class="form-control" id="profilePic-uploader" accept="image/*" style="display: none;">
             <div class="mb-3">
                 <select class="form-select" id="country" name="country" required>
                     
@@ -422,9 +422,15 @@ if (!currentUser) {
     let profilePic = e.target.files[0];
     if (profilePic) {
       let src = URL.createObjectURL(profilePic);
-      $("#profilePic-preview").attr("src", src).removeClass("d-none");
+      $("#profilePic-preview").attr("src", src).css({'display':'block', 'width':'150px', 'height':'150px', 'border-radius':'50%'});
       $("#uploaderLabel").addClass("d-none");
     }
+
+    // change profile picture
+    $('#profilePic-preview').on('click', () => {
+      $('#profilePic-uploader').click();
+    })
+
   });
   // Check if the user has filled in the details (occurs on '.form-control' change):
   $(".form-control").on("change", () => {
@@ -711,8 +717,16 @@ if (!currentUser) {
     let about = $("#about-edit").val();
     let weather = $("#weather").is(":checked");
     let exchange = $("#exchange").is(":checked");
+    let editedProfilePic = await helpers.convertImg("profilePicInput")
 
-    currentUser.picture = await helpers.convertImg("profilePicInput");
+    if($('#profilePic').attr('src') == editedProfilePic || !editedProfilePic){
+      currentUser.picture = currentUser.picture;
+   
+      
+    }else{
+      currentUser.picture = editedProfilePic
+    }
+   
     currentUser.username = $("#username-edit").val();
     currentUser.fullName = $("#fullName-edit").val();
     currentUser.age = $("#age-edit").val();

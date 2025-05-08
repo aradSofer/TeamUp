@@ -86,6 +86,6 @@ body {
     height:fit-content;
 }
 
-#profilePic{
+#profilePic, #uploaderLabel, #profilepic-preview{
     cursor: pointer;
 }

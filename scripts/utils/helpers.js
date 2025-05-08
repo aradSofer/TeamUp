@@ -2,7 +2,7 @@ export function convertImg(elementId) {
     if ($(`#${elementId}`).length > 0) {
       const file = document.getElementById(elementId).files[0];
       if (!file) {
-        alert('No file selected');
+        // alert('No file selected');
         return;
       } else {
         return new Promise((res) => {
