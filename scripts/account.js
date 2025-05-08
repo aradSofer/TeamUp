@@ -500,7 +500,7 @@ if (!currentUser) {
       localStorage.setItem("teamUp_users", JSON.stringify(allUsers));
       localStorage.setItem("teamUp_currentUser", JSON.stringify(currentUser));
       onBoardingPopUp.hide();
-      window.location.href = "../pages/home.html";
+      window.location.href = `../pages/home.html?userId=${currentUser.id}`;
     } else {
       step++;
       stepsController(step);
