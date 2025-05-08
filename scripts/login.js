@@ -19,11 +19,11 @@ sign_inBtn.addEventListener(
                 console.log(user)
                 localStorage.setItem("teamUp_currentUser" , JSON.stringify(user));
                 if(user.username != ''){
-                  window.location = "../pages/home.html"
+                  window.location = `../pages/home.html?userId=${user.id}`
                  return;
                  }else{
              
-                  window.location = "../pages/account.html"
+                  window.location = `../pages/account.html?userId=${user.id}`
                  return;
                  }
              }
