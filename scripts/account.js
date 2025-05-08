@@ -221,7 +221,7 @@ function populateCountrySelect(htmlElementId) {
     select.appendChild(option);
   }
 }
-function createMoreSkillFields(totalSkills) {
+function createMoreSkillFields(totalSkills, isMain,) {
   let skillsExtension = document.createElement("div");
   skillsExtension.id = `skills-ext`;
   let x = document.createElement("div");
@@ -249,11 +249,19 @@ function createMoreSkillFields(totalSkills) {
 
   totalSkills += 3;
   $(skillsExtension).append(x);
-  $("#skills-container").append(skillsExtension);
-  totalSkills++;
+  if(isMain) {
+
+      $("#skills-container-main").append(skillsExtension);
+  }else if(isMain == false){
+    console.log('hi')
+      $("#skills-container").append(skillsExtension);
+  }
+//   totalSkills+= 3
+  console.log(totalSkills)
   if (totalSkills == 9) {
     $("#addSkill").prop("disabled", true).css("opacity", "0.5");
   }
+  return totalSkills
 }
 
 if (!currentUser) {
@@ -476,7 +484,7 @@ if (!currentUser) {
       currentUser.fullName = $("#fullName").val();
       currentUser.age = $("#age").val();
       currentUser.role = $("#role").val();
-      currentUser.picture = await helpers.convertImg();
+      currentUser.picture = await helpers.convertImg("profilePic-uploader");
       currentUser.country = $("#country").val();
       currentUser.skills = skills;
       currentUser.accountLinks = socialMediaLinks;
@@ -507,24 +515,26 @@ if (!currentUser) {
   // Add Skill Button:
   let totalSkills = 3;
   $("#addSkill").on("click", () => {
-    createMoreSkillFields(totalSkills);
+    createMoreSkillFields(totalSkills, false);
+    totalSkills += 3;
   });
 
   onBoardingPopUp.show();
 } else {
   populateCountrySelect("country-edit");
   $("#save-btn").attr("disabled", true).css("opacity", "0.5");
+  $("#cancel-btn").attr("disabled", true).css("opacity", "0.5");
   let isChanges = false;
   $("#account-content").removeClass("d-none");
   $("#profilePic").attr("src", currentUser.picture);
-  $("#about").text(currentUser.about);
+  $("#about-main").text(currentUser.about);
   $("#about-edit").val(currentUser.about);
   $("#profilePic").attr("alt", currentUser.fullName);
-  $("#username").text(currentUser.username);
+  $("#username-main").text(currentUser.username);
   $("#username-edit").val(currentUser.username);
-  $("#fullName").text(currentUser.fullName);
+  $("#fullName-main").text(currentUser.fullName);
   $("#fullName-edit").val(currentUser.fullName);
-  $("#email").text(currentUser.email);
+  $("#email-main").text(currentUser.email);
   $("#email-edit").val(currentUser.email);
   $("#role-edit").val(currentUser.role);
   $("#linkedin-edit").val(currentUser.accountLinks.linkedin);
@@ -542,7 +552,7 @@ if (!currentUser) {
       i + 1
     }" value="${currentUser.skills[i]}">
             `;
-    $("#skills-container").append(skill);
+    $("#skills-container-main").append(skill);
 
     $(`#skill-${i + 1}`).attr({
       "data-bs-toggle": "tooltip",
@@ -554,11 +564,12 @@ if (!currentUser) {
   if (currentUser.skills.length < 3) {
     totalSkills = 3;
   } else {
-    totalSkills = $("#skills-container .form-control").length;
+    totalSkills = $("#skills-container-main .form-control").length;
   }
-  $("#addSkill").on("click", () => {
-    createMoreSkillFields(totalSkills);
+  $("#addSkill-main").on("click", () => {
+    createMoreSkillFields(totalSkills, true);
     $("#save-btn").removeAttr("disabled").css("opacity", "1");
+    $("#cancel-btn").removeAttr("disabled").css("opacity", "1");
     totalSkills += 3;
     if ($("#skills-ext .form-control").length == 6) {
       $("#addSkill").prop("disabled", true).css("opacity", "0.5");
@@ -572,10 +583,27 @@ if (!currentUser) {
     if (countryCode != currentUserCountry) {
       isChanges = true;
       $("#save-btn").removeAttr("disabled").css("opacity", "1");
+      $("#cancel-btn").removeAttr("disabled").css("opacity", "1");
     } else {
       isChanges = false;
+
       $("#save-btn").attr("disabled", true).css("opacity", "0.5");
+      $("#cancel-btn").attr("disabled", true).css("opacity", "0.5");
     }
+  });
+  let profilePicEdit;
+  $("#profilePicInput").on("change", async (e) => {
+      profilePicEdit = e.target.files[0];
+        if (profilePicEdit) {
+
+            let picture = $("#profilePic");
+            let src = URL.createObjectURL(profilePicEdit)
+            picture.attr("src", src );
+            isChanges = true;
+            $("#save-btn").removeAttr("disabled").css("opacity", "1");
+            $("#cancel-btn").removeAttr("disabled").css("opacity", "1");
+        }
+   
   });
   $(".form-control").on("change", (e) => {
     let id = e.target.id;
@@ -617,9 +645,11 @@ if (!currentUser) {
     if (changedValue != currentUserField) {
       isChanges = true;
       $("#save-btn").removeAttr("disabled").css("opacity", "1");
+      $("#cancel-btn").removeAttr("disabled").css("opacity", "1");
     } else {
       isChanges = false;
       $("#save-btn").attr("disabled", true).css("opacity", "0.5");
+      $("#cancel-btn").removeAttr("disabled").css("opacity", "1");
     }
   });
   $("#cancel-btn").on("click", () => {
@@ -657,7 +687,7 @@ if (!currentUser) {
     });
   });
 
-  $("#save-btn").on("click", () => {
+  $("#save-btn").on("click", async () => {
     let skills = [];
     for (let i = 1; i <= totalSkills; i++) {
       if ($(`#skill-${i}`).val() != "") {
@@ -672,6 +702,7 @@ if (!currentUser) {
     let weather = $("#weather").is(":checked");
     let exchange = $("#exchange").is(":checked");
 
+    currentUser.profilePic = await helpers.convertImg("profilePicInput");
     currentUser.username = $("#username-edit").val();
     currentUser.fullName = $("#fullName-edit").val();
     currentUser.age = $("#age-edit").val();

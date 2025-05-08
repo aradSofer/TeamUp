@@ -1,6 +1,6 @@
-export function convertImg() {
+export function convertImg(elementId) {
     if ($("#profilePic-uploader").length > 0) {
-      const file = document.getElementById('profilePic-uploader').files[0];
+      const file = document.getElementById(elementId).files[0];
       if (!file) {
         alert('No file selected');
         return;

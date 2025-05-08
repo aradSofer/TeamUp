@@ -20,16 +20,19 @@
                             <div class="account-settings">
                                 <div class="user-profile">
                                     <div class="user-avatar">
-                                        <img id="profilePic" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                            alt="Maxwell Admin">
+                                        <label for="profilePicInput" class="user-avatar-label">
+                                            <img id="profilePic" src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                            alt="Maxwell Admin" data-bs-toggle="tooltip"data-bs-placement="bottom" data-bs-title="Change Profile Picture">
+                                        </label>
+                                        <input type="file" id="profilePicInput" accept="image/jpeg, image/png" style="display: none;">
                                     </div>
-                                    <h5 id="username" class="user-name"></h5>
-                                    <h6 id="fullName" class="user-email"></h6>
-                                    <h6 id="email" class="user-email"></h6>
+                                    <h5 id="username-main" class="user-name"></h5>
+                                    <h6 id="fullName-main" class="user-email"></h6>
+                                    <h6 id="email-main" class="user-email"></h6>
                                 </div>
                                 <div class="about">
                                     <h5>About</h5>
-                                    <p id="about"></p>
+                                    <p id="about-main"></p>
                                 </div>
                             </div>
                         </div>
@@ -114,13 +117,13 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 skills-wrapper">
                                     <div class="skills-header-container">
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-10">
-                                            <label for="skills-container">Skills</label>
+                                            <label>Skills</label>
                                         </div>
-                                        <button class="btn btn-outline-light btn-sm mb-1" id="addSkill">
+                                        <button class="btn btn-outline-light btn-sm mb-1" id="addSkill-main">
                                             <img src="../styles/assets/plus.svg" style="display: inline;">
                                         </button>
                                     </div>
-                                    <div id="skills-container">
+                                    <div id="skills-container-main">
                                         <div class="row d-flex justify-content-between"></div>
                                     </div>
                                 </div>
