@@ -288,9 +288,10 @@ if (!currentUser) {
     <div class="row justify-content-start">
         <div class="col-7">
             <div class="input-group d-flex justify-content-center mb-3 mt-5">
-                <label class="input-group-text py-5" for="profilePic-uploader">Upload Profile Picture</label>
-                <input type="file" class="form-control visually-hidden" id="profilePic-uploader" accept="image/jpeg, image/png">
-            </div>
+                <label id="uploaderLabel" class="input-group-text py-5" for="profilePic-uploader">Upload Profile Picture</label>
+                <img id="profilePic-preview" class="" src="../" alt="Profile Picture" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+                </div>
+                <input type="file" class="form-control d-none" id="profilePic-uploader" accept="image/jpeg, image/png">
             <div class="mb-3">
                 <select class="form-select" id="country" name="country" required>
                     
@@ -416,6 +417,15 @@ if (!currentUser) {
     $("#nextStep").prop("disabled", true);
   }
 
+  // Profile Picture Preview:
+  $("#profilePic-uploader").on("change", (e) => {
+    let profilePic = e.target.files[0];
+    if (profilePic) {
+      let src = URL.createObjectURL(profilePic);
+      $("#profilePic-preview").attr("src", src).removeClass("d-none");
+      $("#uploaderLabel").addClass("d-none");
+    }
+  });
   // Check if the user has filled in the details (occurs on '.form-control' change):
   $(".form-control").on("change", () => {
     if (
@@ -702,12 +712,11 @@ if (!currentUser) {
     let weather = $("#weather").is(":checked");
     let exchange = $("#exchange").is(":checked");
 
-    currentUser.profilePic = await helpers.convertImg("profilePicInput");
+    currentUser.picture = await helpers.convertImg("profilePicInput");
     currentUser.username = $("#username-edit").val();
     currentUser.fullName = $("#fullName-edit").val();
     currentUser.age = $("#age-edit").val();
     currentUser.role = $("#role-edit").val();
-    currentUser.picture = $("#profilePic").attr("src");
     currentUser.country = $("#country-edit").val();
     currentUser.skills = skills;
     currentUser.accountLinks = socialMediaLinks;
