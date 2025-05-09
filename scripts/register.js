@@ -2,18 +2,24 @@ class User {
   constructor(id, email, password, fullName) {
     this.id = id;
     this.email = email;
+    this.phone= "";
     this.password = password;
     this.fullName = fullName;
     this.username = "";
     this.country = "";
+    this.address = "";
     this.age = "";
+    this.dateOfBirth = "";
     this.role = "";
     this.about = "";
     this.skills = [];
+    this.education = [];
+    this.isFreelancer = "";
     this.picture = "";
     this.accountLinks = {
       linkedin: "",
       github: "",
+      website: ""
     };
     this.accountPreferences = {
       isWeather: "",

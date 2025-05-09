@@ -221,7 +221,7 @@ function populateCountrySelect(htmlElementId) {
     select.appendChild(option);
   }
 }
-function createMoreSkillFields(totalSkills, isMain,) {
+function createMoreSkillFields(totalSkills, isMain) {
   let skillsExtension = document.createElement("div");
   skillsExtension.id = `skills-ext`;
   let x = document.createElement("div");
@@ -249,19 +249,18 @@ function createMoreSkillFields(totalSkills, isMain,) {
 
   totalSkills += 3;
   $(skillsExtension).append(x);
-  if(isMain) {
-
-      $("#skills-container-main").append(skillsExtension);
-  }else if(isMain == false){
-    console.log('hi')
-      $("#skills-container").append(skillsExtension);
+  if (isMain) {
+    $("#skills-container-main").append(skillsExtension);
+  } else if (isMain == false) {
+    console.log("hi");
+    $("#skills-container").append(skillsExtension);
   }
-//   totalSkills+= 3
-  console.log(totalSkills)
+  //   totalSkills+= 3
+  console.log(totalSkills);
   if (totalSkills == 9) {
     $("#addSkill").prop("disabled", true).css("opacity", "0.5");
   }
-  return totalSkills
+  return totalSkills;
 }
 
 if (!currentUser) {
@@ -283,7 +282,7 @@ if (!currentUser) {
             <h5 class="text-center">Welcome to TeamUp!</h5>
             <p class="text-center">We are excited to have you on board. Please fill in the details below to complete your profile.</p>
         </div>
-    </div> <!-- ← missing row close -->
+    </div> 
 
     <div class="row justify-content-start">
         <div class="col-7">
@@ -311,7 +310,7 @@ if (!currentUser) {
                 <input id="username" type="text" class="form-control" placeholder="Username" required>
             </div>
             <div class="form-group mb-3">
-                <input id="age" type="text" class="form-control" placeholder="Age" required>
+                <input id="dateOfBirth" type="text" class="form-control" placeholder="dd/mm/yyyy" required>
             </div>
             
         </div>
@@ -411,9 +410,9 @@ if (!currentUser) {
   $("#fullName").val(currentUser.fullName);
 
   let fullName = $("#fullName").val();
-  let age = $("#age").val();
+  let dateOfBirth = $("#dateOfBirth").val();
   let role = $("#role").val();
-  if (!fullName || !age || !role) {
+  if (!fullName || !dateOfBirth || !role) {
     $("#nextStep").prop("disabled", true);
   }
 
@@ -422,21 +421,25 @@ if (!currentUser) {
     let profilePic = e.target.files[0];
     if (profilePic) {
       let src = URL.createObjectURL(profilePic);
-      $("#profilePic-preview").attr("src", src).css({'display':'block', 'width':'150px', 'height':'150px', 'border-radius':'50%'});
+      $("#profilePic-preview").attr("src", src).css({
+        display: "block",
+        width: "150px",
+        height: "150px",
+        "border-radius": "50%",
+      });
       $("#uploaderLabel").addClass("d-none");
     }
 
     // change profile picture
-    $('#profilePic-preview').on('click', () => {
-      $('#profilePic-uploader').click();
-    })
-
+    $("#profilePic-preview").on("click", () => {
+      $("#profilePic-uploader").click();
+    });
   });
   // Check if the user has filled in the details (occurs on '.form-control' change):
   $(".form-control").on("change", () => {
     if (
       $("#fullName").val() != "" &&
-      $("#age").val() != "" &&
+      $("#dateOfBirth").val() != "" &&
       $("#usename").val() != ""
     ) {
       $("#nextStep").prop("disabled", false);
@@ -498,6 +501,7 @@ if (!currentUser) {
 
       currentUser.username = $("#username").val();
       currentUser.fullName = $("#fullName").val();
+
       currentUser.age = $("#age").val();
       currentUser.role = $("#role").val();
       currentUser.picture = await helpers.convertImg("profilePic-uploader");
@@ -556,7 +560,32 @@ if (!currentUser) {
   $("#linkedin-edit").val(currentUser.accountLinks.linkedin);
   $("#github-edit").val(currentUser.accountLinks.github);
   $("#country-edit").val(currentUser.country);
-  $("#age-edit").val(currentUser.age);
+  $("#age-edit")
+    .val(currentUser.age)
+    .css({ "pointer-events": "none", opacity: "0.5", "font-size": "90%" });
+  $("#phone-edit").val(currentUser.phone);
+  $("#website-edit").val(currentUser.accountLinks.website);
+  $("#address-edit").val(currentUser.address);
+  $("#dateOfBirth-edit").val(currentUser.dateOfBirth);
+
+  for (let x in currentUser.education) {
+    let degree = document.createElement("div");
+    $(degree).addClass("d-flex justify-content-between mb-3");
+    degree.id = `degree-${x + 1}`;
+    degree.innerHTML = `
+            <input id="degree-${
+              x + 1
+            }" type="text" class="form-control" placeholder="Degree" value="${
+      currentUser.education[x].degree
+    }">
+            <input id="university-${
+              x + 1
+            }" type="text" class="form-control" placeholder="University" value="${
+      currentUser.education[x].university
+    }">
+            `;
+    $("#degree-container-main").append(degree);
+  }
 
   for (let i = 0; i < currentUser.skills.length; i++) {
     let skill = document.createElement("div");
@@ -593,6 +622,26 @@ if (!currentUser) {
     return totalSkills;
   });
 
+  $("#addDegree-main").on("click", () => {
+    let degree = document.createElement("div");
+    let totalDegrees = $("#degree-container-main .form-control").length;
+    let index;
+    if (totalDegrees == 0) {
+      index = 1;
+    } else {
+      index = totalDegrees + 1;
+    }
+    $(degree).addClass("d-flex justify-content-between mb-3 degree-wrapper");
+    degree.id = `degree-${index}`;
+    degree.innerHTML = `
+            <input  type="text" class="form-control degree-val" placeholder="Degree">
+            <input  type="text" class="form-control university-val" placeholder="University">
+            `;
+    $("#degree-container-main").append(degree);
+    $("#save-btn").removeAttr("disabled").css("opacity", "1");
+    $("#cancel-btn").removeAttr("disabled").css("opacity", "1");
+  });
+
   $("#country-edit").on("change", (e) => {
     let countryCode = e.target.value;
     let currentUserCountry = currentUser.country;
@@ -609,17 +658,15 @@ if (!currentUser) {
   });
   let profilePicEdit;
   $("#profilePicInput").on("change", async (e) => {
-      profilePicEdit = e.target.files[0];
-        if (profilePicEdit) {
-
-            let picture = $("#profilePic");
-            let src = URL.createObjectURL(profilePicEdit)
-            picture.attr("src", src );
-            isChanges = true;
-            $("#save-btn").removeAttr("disabled").css("opacity", "1");
-            $("#cancel-btn").removeAttr("disabled").css("opacity", "1");
-        }
-   
+    profilePicEdit = e.target.files[0];
+    if (profilePicEdit) {
+      let picture = $("#profilePic");
+      let src = URL.createObjectURL(profilePicEdit);
+      picture.attr("src", src);
+      isChanges = true;
+      $("#save-btn").removeAttr("disabled").css("opacity", "1");
+      $("#cancel-btn").removeAttr("disabled").css("opacity", "1");
+    }
   });
   $(".form-control").on("change", (e) => {
     let id = e.target.id;
@@ -717,16 +764,14 @@ if (!currentUser) {
     let about = $("#about-edit").val();
     let weather = $("#weather").is(":checked");
     let exchange = $("#exchange").is(":checked");
-    let editedProfilePic = await helpers.convertImg("profilePicInput")
+    let editedProfilePic = await helpers.convertImg("profilePicInput");
 
-    if($('#profilePic').attr('src') == editedProfilePic || !editedProfilePic){
+    if ($("#profilePic").attr("src") == editedProfilePic || !editedProfilePic) {
       currentUser.picture = currentUser.picture;
-   
-      
-    }else{
-      currentUser.picture = editedProfilePic
+    } else {
+      currentUser.picture = editedProfilePic;
     }
-   
+
     currentUser.username = $("#username-edit").val();
     currentUser.fullName = $("#fullName-edit").val();
     currentUser.age = $("#age-edit").val();
@@ -737,6 +782,33 @@ if (!currentUser) {
     currentUser.about = about;
     currentUser.accountPreferences.isWeather = weather;
     currentUser.accountPreferences.isExchange = exchange;
+    currentUser.phone = $("#phone-edit").val();
+    currentUser.accountLinks.website = $("#website-edit").val();
+    currentUser.address = $("#address-edit").val();
+    currentUser.dateOfBirth = $("#dateOfBirth-edit").val();
+
+    class Degree {
+      constructor(degree, university) {
+        this.degree = degree;
+        this.university = university;
+      }
+    }
+    let degrees = [];
+    let totalDegrees = $("#degree-container-main .degree-wrapper").length;
+    for (let i = 0; i < totalDegrees; i++) {
+      if (
+        $(`#degree-${i + 1} .degree-val`).val() == "" ||
+        $(`#degree-${i + 1} .university-val`).val() == ""
+      ) {
+        continue;
+      }
+      let degree = new Degree(
+        $(`#degree-${i + 1} .degree-val`).val(),
+        $(`#degree-${i + 1} .university-val`).val()
+      );
+      degrees.push(degree);
+    }
+    currentUser.education = degrees;
 
     for (let x in allUsers) {
       if (allUsers[x].email == currentUser.email) {
@@ -756,3 +828,30 @@ const tooltipTriggerList = document.querySelectorAll(
 const tooltipList = [...tooltipTriggerList].map(
   (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
 );
+
+// date of birth format validation:\
+$("#dateOfBirth-edit").on("change", (e) => {
+  console.log("hi");
+  let date = new Date(e.target.value);
+  if (e.target.validity.valid) {
+    let age = calculateAge(date);
+    $("#age-edit").val(age);
+    if (date.getFullYear() < 1900) {
+      return;
+    }
+  }
+});
+
+function calculateAge(dateOfBirth) {
+  const today = new Date();
+  const birthDate = new Date(dateOfBirth);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDifference = today.getMonth() - birthDate.getMonth();
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+  return age;
+}
