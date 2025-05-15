@@ -570,17 +570,13 @@ if (!currentUser) {
 
   for (let x in currentUser.education) {
     let degree = document.createElement("div");
-    $(degree).addClass("d-flex justify-content-between mb-3");
+    $(degree).addClass("d-flex justify-content-between mb-3 .degree-wrapper");
     degree.id = `degree-${x + 1}`;
     degree.innerHTML = `
-            <input id="degree-${
-              x + 1
-            }" type="text" class="form-control" placeholder="Degree" value="${
+            <input  type="text" class="form-control degree-val" placeholder="Degree" value="${
       currentUser.education[x].degree
     }">
-            <input id="university-${
-              x + 1
-            }" type="text" class="form-control" placeholder="University" value="${
+            <input type="text" class="form-control university-val" placeholder="University" value="${
       currentUser.education[x].university
     }">
             `;
@@ -624,12 +620,12 @@ if (!currentUser) {
 
   $("#addDegree-main").on("click", () => {
     let degree = document.createElement("div");
-    let totalDegrees = $("#degree-container-main .form-control").length;
+    let totalDegrees = $("#degree-container-main .degree-wrapper").length;
     let index;
     if (totalDegrees == 0) {
       index = 1;
     } else {
-      index = totalDegrees + 1;
+      index = +totalDegrees + 1;
     }
     $(degree).addClass("d-flex justify-content-between mb-3 degree-wrapper");
     degree.id = `degree-${index}`;
@@ -793,7 +789,14 @@ if (!currentUser) {
         this.university = university;
       }
     }
-    let degrees = [];
+    let degrees
+    if (!currentUser.education) {
+      degrees = [];
+    }else if(currentUser.education.length == 0 ){
+      degrees = [];
+    }else{
+      degrees = currentUser.education;
+    }
     let totalDegrees = $("#degree-container-main .degree-wrapper").length;
     for (let i = 0; i < totalDegrees; i++) {
       if (
