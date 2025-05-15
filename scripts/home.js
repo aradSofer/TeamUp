@@ -77,7 +77,7 @@ if(sumSkills % 3 == 0){
         let  skillDiv = document.createElement('div');
         skillDiv.className = 'progress';
         if(x <= 2){
-            skillDiv.innerHTML = `<span class="skill"><span>${skill}</span> <i class="val"></i></span>
+            skillDiv.innerHTML = `<span class="skill"><span>${skill}</span> <i class="val">100%</i></span>
             <div class="progress-bar-wrap">
             <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>`;
@@ -85,7 +85,7 @@ if(sumSkills % 3 == 0){
             let innerSkillsContainer = document.getElementById('innerSkillsContainer[1]')
             innerSkillsContainer.append(skillDiv);
         }else if(x > 2 && x <= 5){
-            skillDiv.innerHTML = `<span class="skill"><span>${skill}</span> <i class="val"></i></span>
+            skillDiv.innerHTML = `<span class="skill"><span>${skill}</span> <i class="val">100%</i></span>
             <div class="progress-bar-wrap">
             <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>`;
@@ -93,7 +93,7 @@ if(sumSkills % 3 == 0){
             innerSkillsContainer.append(skillDiv);
             
         }else{
-            skillDiv.innerHTML = `<span class="skill"><span>${skill}</span> <i class="val"></i></span>
+            skillDiv.innerHTML = `<span class="skill"><span>${skill}</span> <i class="val">100%</i></span>
             <div class="progress-bar-wrap">
             <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>`;
