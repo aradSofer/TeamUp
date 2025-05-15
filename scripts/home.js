@@ -39,6 +39,7 @@ $('#bday').text(`${userObj.dateOfBirth}`);
 $('#website').text(`${userObj.accountLinks.website}`);
 
 
+
 if(userObj.accountPreferences.isWeather == true){
     $('#weather-widget').css("display" , "block");
 }else if(userObj.accountPreferences.isWeather == false){
