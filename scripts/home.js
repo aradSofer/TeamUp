@@ -13,7 +13,14 @@ for (let i in users) {
     }
 }
 
-console.log("userObj after loop:", userObj);
+// console.log("userObj after loop:", userObj);
+for(let key in userObj){
+    if(userObj[`${key}`] == undefined || !userObj[`${key}`]){
+        userObj[`${key}`] = "";
+    }
+}
+console.log(userObj)
+
 $('#profileName').text(`${userObj.fullName}`);
 $('#2').text(`${userObj.fullName}`);
 $('#3').attr("data-typed-items" , `${userObj.fullName}`);
@@ -31,6 +38,18 @@ $('#phone').text(`${userObj.phone}`);
 $('#bday').text(`${userObj.dateOfBirth}`);
 $('#website').text(`${userObj.accountLinks.website}`);
 
+
+if(userObj.accountPreferences.isWeather == true){
+    $('#weather-widget').css("display" , "block");
+}else if(userObj.accountPreferences.isWeather == false){
+    $('#weather-widget').css("display" , "none");
+}
+
+if(userObj.accountPreferences.isExchange){
+    $('#currency-widget').css("display" , "block");
+}else if(userObj.accountPreferences.isExchange == false){
+    $('#currency-widget').css("display" , "none");
+}
 let sumSkills = userObj.skills.length;
 if(sumSkills % 3 == 0){
     let divRes =  (sumSkills / 3);
@@ -85,17 +104,10 @@ if(sumSkills % 3 == 0){
     
     
     
-    // $('#SkillsContainer').html(`<div id="innerSkillsContainer[${i}]" class="col-lg-6"</div>`);
-    //        console.log(skill)
-    //        $(`#innerSkillsContainer[${i}]`).html(`<div class="progress">
-    //                  <span class="skill"><span id="skill1">${skill}</span> <i class="val">100%</i></span>
-    //                  <div class="progress-bar-wrap">
-    //                    <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-    //                  </div>
-    //                </div>`);
+    
        }
     
-console.log(sumSkills);
+// console.log(sumSkills);
 
 
 

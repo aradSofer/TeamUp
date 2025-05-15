@@ -60,10 +60,13 @@ body {
     margin-bottom: 1rem;
 }
 
-#api-selectors{
+#api-selectors, #api-selectors-main{
     margin-left: 8%;
 }
 
+input[type="checkbox"]{
+    cursor: pointer;
+}
 #account-content #addSkill{
     display: inline;
 }

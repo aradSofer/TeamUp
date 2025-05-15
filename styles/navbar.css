@@ -1,0 +1,16 @@
+#search-results {
+    z-index: 1000;
+    top: 100%; 
+    max-height: 200px;
+    overflow-y: auto;
+    border: 0.5px solid black;
+  }
+  #search-results a{
+    border: 0.5px solid black;
+    display: block;
+    padding: 5%;
+    text-decoration: none;
+    color: black;
+    font-weight: bolder;
+    background-color: white;
+  }

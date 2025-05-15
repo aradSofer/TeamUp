@@ -26,6 +26,8 @@
 
   <!-- Main CSS File -->
   <link href="../styles/assets/lib2/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/navbar.css">
+  <link rel="stylesheet" href="../styles/widgets.css">
 
   <!-- =======================================================
   * Template Name: iPortfolio
@@ -38,8 +40,36 @@
 
 <body class="index-page">
 
-  <header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
+  <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" >TeamUp</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <span id="home" class="nav-link active" aria-current="page" style="cursor: pointer;">Home</span>
+          </li>
+          <li class="nav-item">
+            <span id="account" class="nav-link" style="cursor: pointer;">Account</span>
+          </li>
+          <li class="nav-item">
+                <span id="logout-btn" class="nav-link" style="cursor: pointer;">Logout</span>
+          </li>
+          
+        </ul>
+        <div class="position-relative">
+          <input id="search-bar" class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+          <div id="search-results" class="list-group position-absolute w-100 d-none"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <header id="header" class="header dark-background d-flex flex-column mt-5">
+    <i class="header-toggle d-xl-none bi bi-list mt-5"></i>
 
     <div class="profile-img">
       <img id="1"  alt="" class="img-fluid rounded-circle">
@@ -83,7 +113,7 @@
             <li><a href="#">Dropdown 4</a></li> -->
           <!-- </ul> -->
         </li>
-        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+        <li><a href="#my-apis"><i class="bi bi-wrench-adjustable navicon"></i> My APIs</a></li>
       </ul>
     </nav>
 
@@ -299,84 +329,81 @@
     </section><!-- /Resume Section -->
 
     <!-- Contact Section -->
-    <section id="contact" class="contact section">
+    <section id="my-apis" class="contact section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-5">
-
-            <div class="info-wrap">
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h3>Address</h3>
-                  <p>A108 Adam Street, New York, NY 535022</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                <i class="bi bi-telephone flex-shrink-0"></i>
-                <div>
-                  <h3>Call Us</h3>
-                  <p>+1 5589 55488 55</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h3>Email Us</h3>
-                  <p>info@example.com</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <h2>My APIs</h2>
+        
+        <div id="weather-widget" class="weather-widget">
+          <div class="weather-header">
+            <h2>Weather</h2>
+            <select id="weather-mode-select">
+              <option value="current">Current</option>
+              <option value="3">3-Day Forecast</option>
+              <option value="7">7-Day Forecast</option>
+            </select>
+            <select id="weather-location-select">
+              <option value="london">London</option>
+              <option value="new-york">New York</option>
+              <option value="tokyo">Tokyo</option>
+              <option value="tel aviv">Tel Aviv</option>
+            </select>
+          </div>
+        
+          <div id="weather-content">
+      
+          </div>
+        </div>
+  
+  
+        <div id="currency-widget" class="currency-converter">
+          <div class="currency-header">
+            <h2>Currency Exchange</h2>
+          </div>
+        
+          <div class="currency-controls">
+            <input type="number" id="currency-amount" placeholder="Enter amount" />
+        
+            <div class=" d-flex justify-content-evenly">
+  
+            </div>
+            <div class="currency-selectors d-flex justify-content-between">
+              <div id="selector-container-l" class="selector-container d-flex flex-column">
+                <label for="currency-from">From</label>
+                
+                <select id="currency-from">
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="GBP">GBP</option>
+                </select>
+              </div>
+              
+              <div id="selector-container-r" class="d-flex flex-column">
+  
+                <label for="currency-to">To</label>
+                <select id="currency-to">
+                  <option value="EUR">EUR</option>
+                  <option value="USD">USD</option>
+                  <option value="GBP">GBP</option>
+                  <option value="ILS">ILS</option>
+                </select>
+              </div>
+              </div>
+              
+            <div class="d-flex justify-content-evenly">
+              <button id="swap" class="btn btn-outline-secondary">⇄</button>
+              <button id="convert" class="btn btn-outline-primary">Convert</button>
+              <button id="clear" class="btn btn-outline-danger">Clear</button>
             </div>
           </div>
+        
+          <div id="currency-result">
+          </div>
+        </div>
+        
 
-          <div class="col-lg-7">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-              <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <label for="name-field" class="pb-2">Your Name</label>
-                  <input type="text" name="name" id="name-field" class="form-control"  autocomplete="false">
-                </div>
-
-                <div class="col-md-6">
-                  <label for="email-field" class="pb-2">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email-field" autocomplete="false" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="subject-field" class="pb-2">Subject</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="message-field" class="pb-2">Message</label>
-                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
-                </div>
-
-              </div>
-            </form>
-          </div><!-- End Contact Form -->
+          
 
         </div>
 
@@ -425,6 +452,8 @@
    <script src="../scripts/Lib/jquery.min.js"></script>
   <script src="../scripts/lib2/main.js"></script>
   <script src="../scripts/home.js"></script>
+  <script src="../scripts/navbar.js"></script>
+  <script type="module" src="../scripts/widgets.js"></script>
 
 </body>
 

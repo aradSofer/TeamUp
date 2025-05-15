@@ -23,7 +23,7 @@ export function convertImg(elementId) {
     switch(api){
       
       case "currency":
-        apiPath = `https://api.currencyfreaks.com/v2.0/iptocurrency?from=gbp&amount=500&ip=182.186.18.9&apikey=2e639b05f01540cdb5bd7a5f7d488af7", ${requestOptions}`
+        apiPath = `https://api.exchangerate.host/convert?access_key=bc44dd6151d5eaf16ec9c97cf9df48ee&${requestOptions}`
         break;
       case "weatherForecast":
         apiPath = `http://api.weatherapi.com/v1/forecast.json?key=08e22e247bb14da1943191555251305&${requestOptions}&aqi=no&alerts=no`
@@ -31,17 +31,24 @@ export function convertImg(elementId) {
       case "weatherCurrent":
         apiPath = `http://api.weatherapi.com/v1/current.json?key=08e22e247bb14da1943191555251305&${requestOptions}&aqi=no&alerts=no`
         break;
-      let fetchResponse = await fetch(apiPath, {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/json",
-          
-          }
-      })
-      let response = await fetchResponse.json();
-      return response
-  }
+      case "ipInfo":
+        apiPath = 'https://ipinfo.io/json/?token=d0d75763f34b08'
+        break;
+      default:
+        throw new Error("Invalid API name")
+      }
 
-  }
+      try {
+        const fetchResponse = await fetch(apiPath, {
+          method: "GET",
+        });
+    
+        const response = await fetchResponse.json();
+        return response;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error;
+      }
+    }
   
   
